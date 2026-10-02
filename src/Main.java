@@ -1,8 +1,10 @@
 import reader.Reader;
 
+import java.util.Objects;
+
 class Main {
     public static void main(String[] args) {
-        String file = "./src/main.dh4";
+        String file = args[0];
 
         Reader reader = new Reader(file);
 
@@ -10,7 +12,9 @@ class Main {
     }
 
     public static void ExecFile(Reader reader) {
-        for (String line : reader.getLines()) {
+        while (!reader.IsEnded()) {
+            String line = reader.NextLine();
+
             System.out.println(line);
         }
     }

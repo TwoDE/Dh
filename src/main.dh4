@@ -1,6 +1,9 @@
-1
-2
-3
-4
-5
-6
+int x = 1;
+
+def avs():
+    print(x);
+    core.do(Something);
+
+avs();
+
+Something.setIsDone(true);
