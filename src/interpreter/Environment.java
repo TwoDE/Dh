@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Environment {
-    private HashMap<String, DhObject> mem = new HashMap<>();
+    private HashMap<String, Object> mem = new HashMap<>();
 
-    public void AddMem(String key, DhObject obj) {
+    public void AddMem(String key, Object obj) {
         mem.put(key, obj);
     }
-    public DhObject GetFromMem(String key) {
+    public Object GetFromMem(String key) {
         return mem.get(key);
     }
 

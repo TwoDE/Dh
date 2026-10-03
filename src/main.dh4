@@ -1,2 +1,6 @@
-String a = "32123212321"
-
+print 32
+func anyFunc()
+{
+print "333221"
+}
+print 23

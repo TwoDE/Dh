@@ -1,6 +1,4 @@
-package lexer.tokens;
-
-import lexer.TokenType;
+package lexer;
 
 public class Token {
 
@@ -11,12 +9,16 @@ public class Token {
         this.type = type;
         this.value = value;
     }
-    
+
     public TokenType getType() {
         return type;
     }
 
     public String getValue() {
         return value;
+    }
+
+    public String toString(){
+        return String.format("Token{%s, '%s'}", type, value);
     }
 }
