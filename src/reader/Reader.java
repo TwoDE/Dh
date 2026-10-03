@@ -86,7 +86,8 @@ public class Reader {
     }
 
     public boolean IsEnded() {
-        return (currentLine >= lines.toArray().length);
+        return (currentLine >= lines.size());
     }
+    public int GetLine() { return currentLine; }
 
 }
