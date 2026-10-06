@@ -2,7 +2,7 @@ package lexer;
 
 public enum TokenType {
     // Ключевые слова
-    KEYWORD_INT,    // int
+    KEYWORD_VAR,    // int
     KEYWORD_FUNC,   // func
     KEYWORD_PRINT,  // print
 
