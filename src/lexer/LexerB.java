@@ -42,7 +42,7 @@ public class LexerB {
                     case "int" -> TokenType.KEYWORD_INT;
                     case "func" -> TokenType.KEYWORD_FUNC;
                     case "print" -> TokenType.KEYWORD_PRINT;
-                    default -> TokenType.IDENTIFIER;
+                    default -> TokenType.ID;
                 };
                 tokens.add(new Token(type, word));
                 continue;
@@ -52,7 +52,8 @@ public class LexerB {
             if (current == '"') {
                 pos++; // пропускаем открывающую "
                 StringBuilder sb = new StringBuilder();
-                while (pos < line.length() && line.charAt(pos) != '"') {
+
+                while (line.charAt(pos) != '"') {
                     sb.append(line.charAt(pos));
                     pos++;
                 }
@@ -72,6 +73,7 @@ public class LexerB {
             pos++;
         }
 
+        tokens.add(new Token(TokenType.END, ""));
         return tokens;
     }
 }

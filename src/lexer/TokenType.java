@@ -7,18 +7,20 @@ public enum TokenType {
     KEYWORD_PRINT,  // print
 
     // Идентификаторы и литералы
-    IDENTIFIER,     // a, anyFunc
+    ID,     // a, anyFunc
     NUMBER,         // 123
     STRING,         // "333221"
 
     // Символы и операторы
-    ASSIGN,         // =
-    LPAREN,         // (
-    RPAREN,         // )
-    LBRACE,         // {
-    RBRACE,         // }
+    LPAREN, RPAREN,   // ( )
+    LBRACE, RBRACE,   // { }
+    COMMA,
 
-    // Служебные
-    NEWLINE,        // Конец строки (важно для разделения команд)
-    EOF             // Конец файла (End Of File)
+    ASSIGN,        // =
+    EQ,            // ==
+    NEQ,           // !=
+    LT, GT, LE, GE,
+    PLUS, MINUS, STAR, SLASH,
+
+    END
 }

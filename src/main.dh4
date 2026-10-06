@@ -1,6 +1,3 @@
-print 32
-func anyFunc()
-{
-print "333221"
-}
-print 23
+print "ehllo work"
+
+

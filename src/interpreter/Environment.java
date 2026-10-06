@@ -1,7 +1,5 @@
 package interpreter;
 
-import objects.DhObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,6 +11,9 @@ public class Environment {
     }
     public Object GetFromMem(String key) {
         return mem.get(key);
+    }
+    public boolean HasKey(String key) {
+        return mem.containsKey(key);
     }
 
 }

@@ -10,11 +10,11 @@ public class Token {
         this.value = value;
     }
 
-    public TokenType getType() {
+    public TokenType type() {
         return type;
     }
 
-    public String getValue() {
+    public String value() {
         return value;
     }
 
