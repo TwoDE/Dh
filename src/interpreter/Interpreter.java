@@ -18,8 +18,6 @@ public class Interpreter {
     }
 
     public void Run() throws Exception {
-        boolean insideFuncDec = false;
-
         while (!reader.IsEnded()) {
             String line = reader.NextLine();
             if (line.isBlank())
