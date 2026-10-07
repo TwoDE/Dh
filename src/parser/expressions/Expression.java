@@ -1,7 +1,8 @@
 package parser.expressions;
 
 import interpreter.Interpreter;
+import objects.DhObject;
 
 public interface Expression {
-    Object eval(Interpreter ipt);
+    DhObject eval(Interpreter ipt);
 }

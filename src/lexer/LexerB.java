@@ -39,9 +39,11 @@ public class LexerB {
                 }
                 String word = sb.toString();
                 TokenType type = switch (word) {
-                    case "var" -> TokenType.KEYWORD_VAR;
-                    case "func" -> TokenType.KEYWORD_FUNC;
-                    case "print" -> TokenType.KEYWORD_PRINT;
+                    case "var" -> TokenType.VAR;
+                    case "func" -> TokenType.FUNC;
+                    case "print" -> TokenType.PRINT;
+                    case "true" -> TokenType.BOOL_TRUE;
+                    case "false" -> TokenType.BOOL_FALSE;
                     default -> TokenType.ID;
                 };
                 tokens.add(new Token(type, word));

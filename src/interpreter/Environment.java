@@ -1,15 +1,17 @@
 package interpreter;
 
-import java.util.ArrayList;
+import objects.DhObject;
+
 import java.util.HashMap;
 
 public class Environment {
-    private final HashMap<String, Object> mem = new HashMap<>();
+    private final HashMap<String, DhObject> mem = new HashMap<>();
 
-    public void AddMem(String key, Object obj) {
+    public void AddMem(String key, DhObject obj) {
         mem.put(key, obj);
     }
-    public Object GetFromMem(String key) {
+
+    public DhObject GetFromMem(String key) {
         if (mem.containsKey(key))
             return mem.get(key);
 

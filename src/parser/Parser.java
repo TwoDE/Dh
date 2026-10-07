@@ -1,6 +1,5 @@
 package parser;
 
-import interpreter.Interpreter;
 import lexer.Token;
 import lexer.TokenType;
 import parser.expressions.*;
@@ -8,7 +7,6 @@ import parser.statements.LetStatement;
 import parser.statements.PrintStatement;
 import parser.statements.Statement;
 
-import javax.naming.ldap.ExtendedRequest;
 import java.util.List;
 
 public class Parser {
@@ -21,13 +19,13 @@ public class Parser {
 
     public Statement parse() throws Exception {
 
-        System.out.println(tokens);
+//        System.out.println(tokens);
         Token first = peek();
         switch (first.type()) {
-            case TokenType.KEYWORD_PRINT -> {
+            case TokenType.PRINT -> {
                 return new PrintStatement(nextExpression());
             }
-            case TokenType.KEYWORD_VAR -> {
+            case TokenType.VAR -> {
                 String name = advance().value();
 
                 Token next = advance();
@@ -38,7 +36,7 @@ public class Parser {
                 return new LetStatement(name, nextExpression());
             }
         }
-        return new PrintStatement(new StringExpression("но-статемент"));
+        throw new RuntimeException("no statements found: " + tokens);
     }
 
     private Expression nextExpression() {
@@ -49,6 +47,9 @@ public class Parser {
             }
             case NUMBER -> {
                 return new NumberExpression(Integer.parseInt(exprToken.value()));
+            }
+            case TokenType.BOOL_FALSE, TokenType.BOOL_TRUE -> {
+                return new BoolExpression(Boolean.parseBoolean(exprToken.value()));
             }
             case ID -> {
                 return new VarExpression(exprToken.value());

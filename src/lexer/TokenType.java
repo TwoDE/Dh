@@ -2,14 +2,16 @@ package lexer;
 
 public enum TokenType {
     // Ключевые слова
-    KEYWORD_VAR,    // int
-    KEYWORD_FUNC,   // func
-    KEYWORD_PRINT,  // print
+    VAR,    // var
+    FUNC,   // func
+    PRINT,  // print
 
     // Идентификаторы и литералы
     ID,     // a, anyFunc
     NUMBER,         // 123
     STRING,         // "333221"
+
+    BOOL_TRUE, BOOL_FALSE,
 
     // Символы и операторы
     LPAREN, RPAREN,   // ( )
