@@ -19,27 +19,46 @@ public class Parser {
 
     public Statement parse() throws Exception {
 
-//        System.out.println(tokens);
+        System.out.println(tokens);
         Token first = peek();
         switch (first.type()) {
             case TokenType.PRINT -> {
-                return new PrintStatement(nextExpression());
+                return new PrintStatement(parseNext());
             }
+
             case TokenType.VAR -> {
                 String name = advance().value();
 
-                Token next = advance();
+                advance();
 
-                if (next.type() != TokenType.ASSIGN)
-                    throw new RuntimeException("unexpected token '" + next+"'");
+                expect(TokenType.ASSIGN);
 
-                return new LetStatement(name, nextExpression());
+                return new LetStatement(name, parseNext());
             }
+
         }
         throw new RuntimeException("no statements found: " + tokens);
     }
 
-    private Expression nextExpression() {
+    private Expression parseNext() {
+        return parseAdd();
+    }
+
+    private Expression parseAdd() {
+        Expression left = nextPrimary();
+        advance();
+        while (check(TokenType.PLUS) || check(TokenType.MINUS)) {
+            System.out.println(peek());
+            TokenType op = peek().type();
+            Expression right = nextPrimary();
+            left = new BinaryExpression(left, op, right);
+            advance();
+        }
+
+        return left;
+    }
+
+    private Expression nextPrimary() {
         Token exprToken = advance();
         switch (exprToken.type()) {
             case STRING -> {
@@ -61,8 +80,21 @@ public class Parser {
     private Token peek() {
         return tokens.get(pos);
     }
+
+    private boolean check(TokenType type) {
+        return peek().type() == type;
+    }
+
     private Token advance() {
         return tokens.get(++pos);
+    }
+
+
+    private Token expect(TokenType token) {
+        if (!check(token)) {
+            throw new RuntimeException("unexpected token '" + peek().type() + "'");
+        }
+        return peek();
     }
 
 

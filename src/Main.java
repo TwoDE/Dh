@@ -10,7 +10,7 @@ class Main {
             Interpreter interpreter = new Interpreter(file);
             interpreter.Run();
         }  catch (RuntimeException e) {
-            System.err.println("\nJava Runtime Exception was occ: \n\t" + e.getMessage() + "\n\nStackTrace:");
+            System.err.println(e.getMessage() + "\n\nStackTrace:");
             for (StackTraceElement el : e.getStackTrace()) {
                 System.err.println("\t" + el);
             }

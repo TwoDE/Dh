@@ -44,6 +44,9 @@ public class LexerB {
                     case "print" -> TokenType.PRINT;
                     case "true" -> TokenType.BOOL_TRUE;
                     case "false" -> TokenType.BOOL_FALSE;
+
+                    case "==" -> TokenType.EQ;
+
                     default -> TokenType.ID;
                 };
                 tokens.add(new Token(type, word));
@@ -71,9 +74,14 @@ public class LexerB {
                 case '}' -> tokens.add(new Token(TokenType.RBRACE, "}"));
                 case '(' -> tokens.add(new Token(TokenType.LPAREN, "("));
                 case ')' -> tokens.add(new Token(TokenType.RPAREN, ")"));
+                case ',' -> tokens.add(new Token(TokenType.COMMA, ","));
+                case '+' -> tokens.add(new Token(TokenType.PLUS, "+"));
+                case '-' -> tokens.add(new Token(TokenType.MINUS, "-"));
             }
             pos++;
         }
+
+        tokens.add(new Token(TokenType.ENDL, ""));
         return tokens;
     }
 }

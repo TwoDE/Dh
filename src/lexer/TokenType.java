@@ -3,6 +3,7 @@ package lexer;
 public enum TokenType {
     // Ключевые слова
     VAR,    // var
+
     FUNC,   // func
     PRINT,  // print
 
@@ -16,13 +17,13 @@ public enum TokenType {
     // Символы и операторы
     LPAREN, RPAREN,   // ( )
     LBRACE, RBRACE,   // { }
-    COMMA,
+    COMMA, // ,
 
     ASSIGN,        // =
     EQ,            // ==
     NEQ,           // !=
-    LT, GT, LE, GE,
+    LT, GT,
     PLUS, MINUS, STAR, SLASH,
 
-    END
+    ENDL
 }

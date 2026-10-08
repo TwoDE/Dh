@@ -23,11 +23,17 @@ public class Interpreter {
             if (line.isBlank())
                 continue;
 
-            List<Token> tokens = LexerB.tokenizeLine(line);
-            Parser parser = new Parser(tokens);
-            Statement statement = parser.parse();
+            try {
+                List<Token> tokens = LexerB.tokenizeLine(line);
+                Parser parser = new Parser(tokens);
+                Statement statement = parser.parse();
 
-            statement.execute(this);
+                statement.execute(this);
+            } catch (RuntimeException e) {
+                System.err.println("\nJava Runtime Exception was occured:");
+                System.err.print("\nline " + reader.GetLine() + ": '" + line + "'\n\t");
+                throw e;
+            }
         }
     }
 
