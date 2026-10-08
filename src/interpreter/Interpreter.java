@@ -30,8 +30,8 @@ public class Interpreter {
 
                 statement.execute(this);
             } catch (RuntimeException e) {
-                System.err.println("\nJava Runtime Exception was occured:");
-                System.err.print("\nline " + reader.GetLine() + ": '" + line + "'\n\t");
+                System.err.println("\nJava Runtime Exception was occured:\n");
+                System.err.print("\t" + line + "\n\nERROR > ");
                 throw e;
             }
         }

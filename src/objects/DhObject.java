@@ -39,7 +39,7 @@ public abstract class DhObject {
 
     protected RuntimeException unsupported(String op ) {
         return new RuntimeException(
-                "Операция " + op + " не поддерживается для " + typeName()
+                "Operation '" + op + "' is not supported for " + typeName()
         );
     }
 

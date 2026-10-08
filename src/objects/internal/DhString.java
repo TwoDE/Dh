@@ -25,6 +25,11 @@ public class DhString extends DhObject {
         return DhBool.FALSE;
     }
 
+    @Override
+    public DhObject add(DhObject other) {
+        return new DhString(value+other.toString());
+    }
+
     @Override public boolean isTruth() {
         return !value.isEmpty();
     }
