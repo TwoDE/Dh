@@ -9,14 +9,11 @@ class Main {
         try {
             Interpreter interpreter = new Interpreter(file);
             interpreter.Run();
-        }  catch (RuntimeException e) {
+        }  catch (Throwable e) {
             System.err.println(e.getMessage() + "\n\nStackTrace:");
             for (StackTraceElement el : e.getStackTrace()) {
                 System.err.println("\t" + el);
             }
-        } catch (Throwable e) {
-            System.err.println("\nJava Throw was occ: \n" + e);
-            System.err.println(Arrays.toString(e.getStackTrace()));
         }
     }
 }

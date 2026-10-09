@@ -2,7 +2,6 @@ package interpreter;
 
 import lexer.LexerB;
 import lexer.Token;
-import lexer.TokenType;
 import parser.Parser;
 import parser.statements.Statement;
 import reader.Reader;
@@ -30,7 +29,11 @@ public class Interpreter {
 
                 statement.execute(this);
             } catch (RuntimeException e) {
-                System.err.println("\nJava Runtime Exception was occured:\n");
+                System.err.println("\nJava Runtime Exception was occurred:\n");
+                System.err.print("\t" + line + "\n\nERROR > ");
+                throw e;
+            } catch (Throwable e) {
+                System.err.println("\nJava Throw was occurred: \n");
                 System.err.print("\t" + line + "\n\nERROR > ");
                 throw e;
             }
