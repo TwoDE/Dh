@@ -77,6 +77,8 @@ public class LexerB {
                 case ',' -> tokens.add(new Token(TokenType.COMMA, ","));
                 case '+' -> tokens.add(new Token(TokenType.PLUS, "+"));
                 case '-' -> tokens.add(new Token(TokenType.MINUS, "-"));
+                case '*' -> tokens.add(new Token(TokenType.STAR, "*"));
+                case '/' -> tokens.add(new Token(TokenType.SLASH, "/"));
             }
             pos++;
         }

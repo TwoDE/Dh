@@ -20,7 +20,7 @@ public class Parser {
     public Statement parse() throws Exception {
 
         System.out.println(tokens);
-        Token first = peek();
+        Token first = advance();
         switch (first.type()) {
             case TokenType.PRINT -> {
                 return new PrintStatement(parseNext());
@@ -45,14 +45,24 @@ public class Parser {
     }
 
     private Expression parseAdd() {
-        Expression left = nextPrimary();
-        advance();
+        Expression left = parseMul();
+
         while (check(TokenType.PLUS) || check(TokenType.MINUS)) {
-            System.out.println(peek());
-            TokenType op = peek().type();
+            TokenType op = advance().type();
+            Expression right = parseMul();
+            left = new BinaryExpression(left, op, right);
+        }
+
+        return left;
+    }
+
+    private Expression parseMul() {
+        Expression left = nextPrimary();
+
+        while (check(TokenType.STAR) || check(TokenType.SLASH)) {
+            TokenType op = advance().type();
             Expression right = nextPrimary();
             left = new BinaryExpression(left, op, right);
-            advance();
         }
 
         return left;
@@ -86,7 +96,7 @@ public class Parser {
     }
 
     private Token advance() {
-        return tokens.get(++pos);
+        return tokens.get(pos++);
     }
 
 
