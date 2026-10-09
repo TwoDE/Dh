@@ -44,6 +44,7 @@ public class LexerB {
                     case "print" -> TokenType.PRINT;
                     case "true" -> TokenType.BOOL_TRUE;
                     case "false" -> TokenType.BOOL_FALSE;
+                    case "input" -> TokenType.INPUT;
 
                     case "==" -> TokenType.EQ;
 

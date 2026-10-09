@@ -3,6 +3,7 @@ package lexer;
 public enum TokenType {
     // Ключевые слова
     VAR,    // var
+    INPUT, // input from console
 
     FUNC,   // func
     PRINT,  // print

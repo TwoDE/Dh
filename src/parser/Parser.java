@@ -29,8 +29,6 @@ public class Parser {
             case TokenType.VAR -> {
                 String name = advance().value();
 
-                advance();
-
                 expect(TokenType.ASSIGN);
 
                 return new LetStatement(name, parseNext());
@@ -80,6 +78,10 @@ public class Parser {
             case TokenType.BOOL_FALSE, TokenType.BOOL_TRUE -> {
                 return new BoolExpression(Boolean.parseBoolean(exprToken.value()));
             }
+            case INPUT -> {
+                return new InputExpression();
+            }
+
             case ID -> {
                 return new VarExpression(exprToken.value());
             }
@@ -104,7 +106,7 @@ public class Parser {
         if (!check(token)) {
             throw new RuntimeException("unexpected token '" + peek().type() + "'");
         }
-        return peek();
+        return advance();
     }
 
 
