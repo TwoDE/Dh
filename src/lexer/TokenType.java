@@ -20,11 +20,14 @@ public enum TokenType {
     LBRACE, RBRACE,   // { }
     COMMA, // ,
 
+    NOT,
     ASSIGN,        // =
     EQ,            // ==
     NEQ,           // !=
-    LT, GT,
-    PLUS, MINUS, STAR, SLASH,
+    LT, GT, // > <
+    PLUS, MINUS, STAR, SLASH, // + - * /
 
-    ENDL
+    SEMICOLON,
+
+    END
 }

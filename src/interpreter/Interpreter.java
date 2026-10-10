@@ -1,47 +1,42 @@
 package interpreter;
 
+import lexer.Lexer;
 import lexer.LexerB;
 import lexer.Token;
-import parser.Parser;
-import parser.statements.Statement;
-import reader.Reader;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 public class Interpreter {
-    private final Reader reader;
+    String text;
     private final Environment env = new Environment();
 
-    public Interpreter(String file) {
-        reader = new Reader(file);
+    public Interpreter(String file) throws IOException {
+        text = Files.readString(Path.of(file));
     }
 
-    public void Run() throws Exception {
-        while (!reader.IsEnded()) {
-            String line = reader.NextLine();
-            if (line.isBlank())
-                continue;
+    public void Run(){
+        try {
+            List<Token> tokensB = LexerB.tokenizeLine(text);
+            List<Token> tokens = new Lexer(text).tokenize();
 
-            try {
-                List<Token> tokens = LexerB.tokenizeLine(line);
-                Parser parser = new Parser(tokens);
-                Statement statement = parser.parse();
-
-                statement.execute(this);
-            } catch (RuntimeException e) {
-                System.err.println("\nJava Runtime Exception was occurred:\n");
-                System.err.print("\t" + line + "\n\nERROR > ");
-                throw e;
-            } catch (Throwable e) {
-                System.err.println("\nJava Throw was occurred: \n");
-                System.err.print("\t" + line + "\n\nERROR > ");
-                throw e;
-            }
+            System.out.println(tokensB);
+            System.out.println(tokens);
+//                Parser parser = new Parser(tokens);
+//                Statement statement = parser.parse();
+//
+//                statement.execute(this);
+        } catch (RuntimeException e) {
+            System.err.println("\nJava Runtime Exception was occurred:\n");
+            System.err.print("\t" + "line" + "\n\nERROR > ");
+            throw e;
+        } catch (Throwable e) {
+            System.err.println("\nJava Throw was occurred: \n");
+            System.err.print("\t" + "line" + "\n\nERROR > ");
+            throw e;
         }
-    }
-
-    public Reader getReader() {
-        return reader;
     }
 
     public Environment getEnv() {

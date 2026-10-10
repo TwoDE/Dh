@@ -84,7 +84,7 @@ public class LexerB {
             pos++;
         }
 
-        tokens.add(new Token(TokenType.ENDL, ""));
+        tokens.add(new Token(TokenType.END, ""));
         return tokens;
     }
 }
