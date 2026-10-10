@@ -23,7 +23,10 @@ public class Parser {
         Token first = advance();
         switch (first.type()) {
             case TokenType.PRINT -> {
-                return new PrintStatement(parseNext());
+                expect(TokenType.LPAREN);
+                Statement res = new PrintStatement(parseNext());
+                expect(TokenType.RPAREN);
+                return res;
             }
 
             case TokenType.VAR -> {
