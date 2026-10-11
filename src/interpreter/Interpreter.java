@@ -3,6 +3,8 @@ package interpreter;
 import lexer.Lexer;
 import lexer.LexerB;
 import lexer.Token;
+import parser.Parser;
+import parser.statements.Statement;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +13,7 @@ import java.util.List;
 
 public class Interpreter {
     String text;
-    private final Environment env = new Environment();
+    private final Environment env = new Environment(); // variable's storage
 
     public Interpreter(String file) throws IOException {
         text = Files.readString(Path.of(file));
@@ -19,11 +21,12 @@ public class Interpreter {
 
     public void Run(){
         try {
-            List<Token> tokensB = LexerB.tokenizeLine(text);
             List<Token> tokens = new Lexer(text).tokenize();
+            List<Statement> statementList = new Parser(tokens).parse();
 
-            System.out.println(tokensB);
-            System.out.println(tokens);
+            for (Statement statement: statementList) {
+                statement.execute(this);
+            }
 //                Parser parser = new Parser(tokens);
 //                Statement statement = parser.parse();
 //

@@ -3,46 +3,73 @@ package parser;
 import lexer.Token;
 import lexer.TokenType;
 import parser.expressions.*;
-import parser.statements.LetStatement;
-import parser.statements.PrintStatement;
-import parser.statements.Statement;
+import parser.statements.*;
 
-import java.util.List;
+import javax.lang.model.type.NullType;
+import java.util.*;
 
 public class Parser {
-    private int pos = 0;
     private final List<Token> tokens;
+    int pos = 0;
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;
     }
 
-    public Statement parse() throws Exception {
+    public ArrayList<Statement> parse() {
+        ArrayList<Statement> statements = new ArrayList<>();
 
-        System.out.println(tokens);
-        Token first = advance();
-        switch (first.type()) {
-            case TokenType.PRINT -> {
-                expect(TokenType.LPAREN);
-                Statement res = new PrintStatement(parseNext());
-                expect(TokenType.RPAREN);
-                return res;
+        while (peek().type() != TokenType.END) {
+            Statement currentStmt = null;
+
+            while (peek().type() != TokenType.SEMICOLON) {
+                Token first = advance();
+
+                switch (first.type()) {
+                    case PRINT -> {
+                        expect(TokenType.LPAREN);
+                        Statement res = new PrintStatement(parseNext());
+                        expect(TokenType.RPAREN);
+                        checkSemicolon();
+
+                        currentStmt = res;
+                    }
+
+                    case VAR -> {
+                        String name = advance().value();
+                        expect(TokenType.ASSIGN);
+
+                        currentStmt = new LetStatement(name, parseNext());
+                        checkSemicolon();
+                    }
+                }
             }
 
-            case TokenType.VAR -> {
-                String name = advance().value();
-
-                expect(TokenType.ASSIGN);
-
-                return new LetStatement(name, parseNext());
+            if (currentStmt == null) {
+                throw new RuntimeException("No statements found");
             }
 
+            statements.add(currentStmt);
+            advance();
         }
-        throw new RuntimeException("no statements found: " + tokens);
+
+        return statements;
     }
 
+    // parse Expressions
     private Expression parseNext() {
-        return parseAdd();
+        return parseEquality();
+    }
+
+    private Expression parseEquality() {
+        Expression left = parseAdd();
+
+        while (check(TokenType.EQ) || check(TokenType.NEQ)) {
+            TokenType op = advance().type();
+            Expression right = parseAdd();
+            left = new BinaryExpression(left, op, right);
+        }
+        return left;
     }
 
     private Expression parseAdd() {
@@ -58,19 +85,20 @@ public class Parser {
     }
 
     private Expression parseMul() {
-        Expression left = nextPrimary();
+        Expression left = parsePrimary();
 
         while (check(TokenType.STAR) || check(TokenType.SLASH)) {
             TokenType op = advance().type();
-            Expression right = nextPrimary();
+            Expression right = parsePrimary();
             left = new BinaryExpression(left, op, right);
         }
 
         return left;
     }
 
-    private Expression nextPrimary() {
+    private Expression parsePrimary() {
         Token exprToken = advance();
+
         switch (exprToken.type()) {
             case STRING -> {
                 return new StringExpression(exprToken.value());
@@ -89,7 +117,13 @@ public class Parser {
                 return new VarExpression(exprToken.value());
             }
         }
+
         throw new RuntimeException("Can't parse expression from " + exprToken);
+    }
+
+    // route methods
+    private Token advance() {
+        return tokens.get(pos++);
     }
 
     private Token peek() {
@@ -100,17 +134,16 @@ public class Parser {
         return peek().type() == type;
     }
 
-    private Token advance() {
-        return tokens.get(pos++);
-    }
-
-
-    private Token expect(TokenType token) {
-        if (!check(token)) {
-            throw new RuntimeException("unexpected token '" + peek().type() + "'");
+    private void expect(TokenType type) {
+        if (!check(type)) {
+            throw new RuntimeException("unexpected token '" + peek().type() + "'. " + type + " expect");
         }
-        return advance();
+        advance();
     }
 
-
+    private void checkSemicolon(){
+        if (!check(TokenType.SEMICOLON)) {
+            throw new RuntimeException("; expect");
+        }
+    }
 }

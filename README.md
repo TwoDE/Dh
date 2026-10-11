@@ -5,36 +5,44 @@
 ## Возможности:
 * Назначение переменных
 * Математические операции - `+, -, *, /`
+* Логические операции - `==, !=`
 * Вывод в консоль(различные типы, в том числе переменные. без перечислений)
 * Ввод текста в консоль
 
 ## Базовый синтаксис:
 **Назначение переменной** (ключевое слово ``var``)
 ```
-var NAME = "variable value"
-var NAME2 = 321231
-var NAME3 = false
+var NAME = "variable value";
+var NAME2 = 321231;
+var NAME3 = false;
 
-var NAME2_CLONE = NAME2
+var NAME2_CLONE = NAME2;
 ```
 **Вывод в консоль** (ключевое слово ``print``)
 ```
-print "текст"
-print NAME
-print 3213
+print("текст");
+print(NAME);
+print(3213);
 ```
 **Ввод** (ключевое слово ``input``)
 ```
-var user_input = input
-print "user's say: " + user_input
+var user_input = input;
+print("user's say: " + user_input); # input всегда возвращает строку!
 ```
 **Математические операции**
 ```
-var sum = 500 + 100
-print sum - 50
-print sum / 50 * 50
+var sum = 500 + 100;
+print(sum - 50);
+print(sum / 50 * 50);
 
-print "String 1" + " " + "string 2"
+print("String 1" + " " + "string 2"); // : String 1 string 2
+```
+**Логические операции**
+```
+var user_input = input;
+
+print("do user say '123'?");
+print(user_input == "123");
 ```
 
 ## Внутреннее устройство

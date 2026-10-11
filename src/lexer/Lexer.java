@@ -16,12 +16,18 @@ public class Lexer {
         while (!(pos == text.length())) {
             char curr = peek();
 
-            if (Character.isWhitespace(curr)) {
+            if (Character.isWhitespace(curr)) { // skip spaces
                 advance();
                 continue;
             }
 
-            if (Character.isDigit(curr)) {
+            if (curr == '#') {
+                do {
+                    advance();
+                } while (peek()!='\n');
+            }
+
+            if (Character.isDigit(curr)) { // check for NUMBER token
                 StringBuilder number = new StringBuilder();
 
                 while (!(pos == text.length()) && Character.isDigit(peek())) {
@@ -31,7 +37,7 @@ public class Lexer {
                 continue;
             }
 
-            if (curr == '"') {
+            if (curr == '"') { // check for STRING token
                 advance();
                 StringBuilder string = new StringBuilder();
 
@@ -43,7 +49,7 @@ public class Lexer {
                 continue;
             }
 
-            if (Character.isLetter(curr) || curr == '_') {
+            if (Character.isLetter(curr) || curr == '_') { // check keywords and IDs
                 StringBuilder wordBuilder = new StringBuilder();
 
                 while (!(pos == text.length()) && (Character.isLetterOrDigit(peek()) || peek() == '_')) {
@@ -65,23 +71,23 @@ public class Lexer {
                 continue;
             }
 
-            if (!Character.isLetterOrDigit(curr)){
+            if (!Character.isLetterOrDigit(curr)){ // check another tokens: =, ==, !, !=, ;....
                 switch (curr) {
                     case '=' -> {
-                        if (peekNext() == '='){
+                        if (peekNext() == '='){ // search for "=="
                             tokens.add(new Token(TokenType.EQ, "=="));
                             advance();
                             break;
                         }
-                        tokens.add(new Token(TokenType.ASSIGN, "="));
+                        tokens.add(new Token(TokenType.ASSIGN, "=")); // if it only "="
                     }
                     case '!' -> {
-                        if (peekNext() == '='){
+                        if (peekNext() == '='){ // search for "!="
                             tokens.add(new Token(TokenType.NEQ, "!="));
                             advance();
                             break;
                         }
-                        tokens.add(new Token(TokenType.NOT, "!"));
+                        tokens.add(new Token(TokenType.NOT, "!")); // if it only "!"
                     }
                     case '{' -> tokens.add(new Token(TokenType.LBRACE, "{"));
                     case '}' -> tokens.add(new Token(TokenType.RBRACE, "}"));
@@ -100,21 +106,20 @@ public class Lexer {
 
 
 
-        tokens.add(new Token(TokenType.END, ""));
+        tokens.add(new Token(TokenType.END, "")); // end of program
         return tokens;
     }
 
-    private char peek() {
+    private char peek() { // get current token
         return text.charAt(pos);
     }
-    private char peekNext() {
-        System.out.println(pos+1 + " " + text.length());
-        if (pos+1 == text.length())
+    private char peekNext() { // try to get next token
+        if (pos+1 == text.length()) // check the file end
             return text.charAt(pos);
-        return text.charAt(pos+1);
+        return text.charAt(pos+1); // if it's end of file
     }
 
-    private char advance() {
+    private char advance() { // get current token and offset pos
         return text.charAt(pos++);
     }
 }
