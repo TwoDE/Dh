@@ -8,6 +8,7 @@
 * Логические операции - `==, !=`
 * Вывод в консоль(различные типы, в том числе переменные. без перечислений)
 * Ввод текста в консоль
+* Ветвление кода через if
 
 ## Базовый синтаксис:
 **Назначение переменной** (ключевое слово ``var``)
@@ -35,7 +36,7 @@ var sum = 500 + 100;
 print(sum - 50);
 print(sum / 50 * 50);
 
-print("String 1" + " " + "string 2"); // : String 1 string 2
+print("String 1" + " " + "string 2"); # : String 1 string 2
 ```
 **Логические операции**
 ```
@@ -44,7 +45,18 @@ var user_input = input;
 print("do user say '123'?");
 print(user_input == "123");
 ```
+**Ветвление кода**
+```
+print("Remove this folder?(y\n)");
+var user_input = input; # ожидается y или n
 
+if user_input == "y" {
+    print("Remove folder...");
+}
+if user_input == "n" {
+    print("Operation canceled");
+}
+```
 ## Внутреннее устройство
 
 Используется объектная система. Есть абстрактный класс DhObject, от которого наследуются DhInt, DhString, DhBool и т.д.

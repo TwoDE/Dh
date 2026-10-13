@@ -20,37 +20,14 @@ public class Parser {
         ArrayList<Statement> statements = new ArrayList<>();
 
         while (peek().type() != TokenType.END) {
-            Statement currentStmt = null;
-
-            while (peek().type() != TokenType.SEMICOLON) {
-                Token first = advance();
-
-                switch (first.type()) {
-                    case PRINT -> {
-                        expect(TokenType.LPAREN);
-                        Statement res = new PrintStatement(parseNext());
-                        expect(TokenType.RPAREN);
-                        checkSemicolon();
-
-                        currentStmt = res;
-                    }
-
-                    case VAR -> {
-                        String name = advance().value();
-                        expect(TokenType.ASSIGN);
-
-                        currentStmt = new LetStatement(name, parseNext());
-                        checkSemicolon();
-                    }
-                }
-            }
+            Statement currentStmt = parseStatement();
 
             if (currentStmt == null) {
                 throw new RuntimeException("No statements found");
             }
+            advance();
 
             statements.add(currentStmt);
-            advance();
         }
 
         return statements;
@@ -121,6 +98,56 @@ public class Parser {
         throw new RuntimeException("Can't parse expression from " + exprToken);
     }
 
+    public ArrayList<Statement> parseBlock() {
+        ArrayList<Statement> statements = new ArrayList<>();
+
+        expect(TokenType.LBRACE);
+        while (peek().type() != TokenType.RBRACE) {
+            statements.add(parseStatement());
+            advance();
+        }
+
+        return statements;
+    }
+
+    public Statement parseStatement() {
+        Statement currentStmt = null;
+
+        while (peek().type() != TokenType.SEMICOLON && peek().type() != TokenType.RBRACE) {
+            Token first = advance();
+
+            switch (first.type()) {
+                case PRINT -> {
+                    expect(TokenType.LPAREN);
+                    Statement res = new PrintStatement(parseNext());
+                    expect(TokenType.RPAREN);
+                    checkSemicolon();
+
+                    currentStmt = res;
+                }
+
+                case VAR -> {
+                    String name = advance().value();
+                    expect(TokenType.ASSIGN);
+
+                    currentStmt = new LetStatement(name, parseNext());
+                    checkSemicolon();
+                }
+
+                case IF -> {
+                    Expression expr = parseNext();
+
+                    currentStmt = new IfStatement(
+                            expr,
+                            parseBlock()
+                    );
+                }
+            }
+        }
+
+        return currentStmt;
+    }
+
     // route methods
     private Token advance() {
         return tokens.get(pos++);
@@ -145,5 +172,6 @@ public class Parser {
         if (!check(TokenType.SEMICOLON)) {
             throw new RuntimeException("; expect");
         }
+//        advance();
     }
 }

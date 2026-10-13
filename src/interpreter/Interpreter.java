@@ -22,6 +22,8 @@ public class Interpreter {
     public void Run(){
         try {
             List<Token> tokens = new Lexer(text).tokenize();
+//            System.out.println(tokens);
+
             List<Statement> statementList = new Parser(tokens).parse();
 
             for (Statement statement: statementList) {

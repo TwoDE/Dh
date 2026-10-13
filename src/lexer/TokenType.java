@@ -7,6 +7,7 @@ public enum TokenType {
 
     FUNC,   // func
     PRINT,  // print
+    IF,
 
     // Идентификаторы и литералы
     ID,     // a, anyFunc
