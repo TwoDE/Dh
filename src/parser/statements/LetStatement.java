@@ -9,7 +9,7 @@ public record LetStatement(String name, Expression expr) implements Statement {
     public void execute(Interpreter ipt) {
         DhObject v = expr.eval(ipt);
 
-        ipt.getEnv().AddMem(name, expr.eval(ipt));
+        ipt.getEnv().AddMem(name, v);
     }
 
     @Override

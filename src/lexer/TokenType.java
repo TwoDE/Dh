@@ -8,6 +8,7 @@ public enum TokenType {
     FUNC,   // func
     PRINT,  // print
     IF,
+    WHILE,
 
     // Идентификаторы и литералы
     ID,     // a, anyFunc
@@ -26,6 +27,7 @@ public enum TokenType {
     EQ,            // ==
     NEQ,           // !=
     LT, GT, // > <
+    LTEQ, GTEQ, // > <
     PLUS, MINUS, STAR, SLASH, // + - * /
 
     SEMICOLON,

@@ -11,9 +11,7 @@ public class InputExpression implements Expression{
 
     @Override
     public DhObject eval(Interpreter ipt) {
-        if (value == null) {
-            value = new Scanner(System.in).nextLine();
-        }
+        value = new Scanner(System.in).nextLine();
         return new DhString(value);
     }
 }

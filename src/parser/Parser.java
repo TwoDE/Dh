@@ -39,9 +39,23 @@ public class Parser {
     }
 
     private Expression parseEquality() {
-        Expression left = parseAdd();
+        Expression left = parseComparison();
 
         while (check(TokenType.EQ) || check(TokenType.NEQ)) {
+            TokenType op = advance().type();
+            Expression right = parseComparison();
+            left = new BinaryExpression(left, op, right);
+        }
+        return left;
+    }
+
+    private Expression parseComparison() {
+        Expression left = parseAdd();
+
+        while (
+                check(TokenType.LT) || check(TokenType.GT) ||
+                check(TokenType.LTEQ) || check(TokenType.GTEQ)
+        ) {
             TokenType op = advance().type();
             Expression right = parseAdd();
             left = new BinaryExpression(left, op, right);
@@ -138,6 +152,13 @@ public class Parser {
                     Expression expr = parseNext();
 
                     currentStmt = new IfStatement(
+                            expr,
+                            parseBlock()
+                    );
+                }
+                case WHILE -> {
+                    Expression expr = parseNext();
+                    currentStmt = new WhileStatement(
                             expr,
                             parseBlock()
                     );

@@ -65,6 +65,7 @@ public class Lexer {
                     case "false" -> TokenType.BOOL_FALSE;
                     case "input" -> TokenType.INPUT;
                     case "if" ->  TokenType.IF;
+                    case "while" -> TokenType.WHILE;
 
                     default -> TokenType.ID;
                 };
@@ -90,6 +91,24 @@ public class Lexer {
                         }
                         tokens.add(new Token(TokenType.NOT, "!")); // if it only "!"
                     }
+
+                    case '<' -> {
+                        if (peekNext() == '='){ // search for "<="
+                            tokens.add(new Token(TokenType.LTEQ, "<="));
+                            advance();
+                            break;
+                        }
+                        tokens.add(new Token(TokenType.LT, "<"));
+                    }
+                    case '>' -> {
+                        if (peekNext() == '='){ // search for ">="
+                            tokens.add(new Token(TokenType.GTEQ, ">="));
+                            advance();
+                            break;
+                        }
+                        tokens.add(new Token(TokenType.GT, ">"));
+                    }
+
                     case '{' -> tokens.add(new Token(TokenType.LBRACE, "{"));
                     case '}' -> tokens.add(new Token(TokenType.RBRACE, "}"));
                     case '(' -> tokens.add(new Token(TokenType.LPAREN, "("));
