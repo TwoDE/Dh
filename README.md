@@ -9,6 +9,7 @@
 * Вывод в консоль(различные типы, в том числе переменные. без перечислений)
 * Ввод текста в консоль
 * Ветвление кода через if
+* Циклы - while
 
 ## Базовый синтаксис:
 **Назначение переменной** (ключевое слово ``var``)
@@ -46,7 +47,7 @@ print("do user say '123'?");
 print(user_input == "123");
 ```
 **Ветвление кода**
-```
+````
 print("Remove this folder?(y\n)");
 var user_input = input; # ожидается y или n
 
@@ -56,7 +57,30 @@ if user_input == "y" {
 if user_input == "n" {
     print("Operation canceled");
 }
-```
+````
+
+````
+var some_number = 23;
+
+print(some_number > 23); # false
+
+var some_number = some_number + 1;
+
+print(some_number > 23); # true
+
+````
+
+**Циклы**
+````
+var x = "12";
+
+while x == "12" {
+    print("x is 12");
+    var x = input;
+}
+
+````
+
 ## Внутреннее устройство
 
 Используется объектная система. Есть абстрактный класс DhObject, от которого наследуются DhInt, DhString, DhBool и т.д.

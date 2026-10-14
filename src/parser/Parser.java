@@ -22,9 +22,6 @@ public class Parser {
         while (peek().type() != TokenType.END) {
             Statement currentStmt = parseStatement();
 
-            if (currentStmt == null) {
-                throw new RuntimeException("No statements found");
-            }
             advance();
 
             statements.add(currentStmt);
@@ -162,6 +159,10 @@ public class Parser {
                             expr,
                             parseBlock()
                     );
+                }
+
+                default -> {
+                    throw new RuntimeException("No statements found");
                 }
             }
         }
